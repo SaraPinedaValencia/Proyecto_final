@@ -3,7 +3,7 @@ from pathlib import Path
 from tkinter import Tk, Canvas, Button, PhotoImage
 from AlmaIntegral.Vista.build_register.register import Register
 from AlmaIntegral.Vista.build_create_product.build.create_product import CreateProduct
-from AlmaIntegral.Vista.build_inventory.build.invetories_view import Inventory
+from AlmaIntegral.Vista.build_inventory.inventories_view import Inventory
 from AlmaIntegral.Vista.build_register_sale.build.register_sale import RegisterSale
 
 CURRENT_PATH = Path(__file__).parent
@@ -107,7 +107,7 @@ class Menu:
 
     def open_inventories_view(self):
         self.window.destroy()
-        self.inventories.start_inventory()
+        self.inventories.start()
 
     def button_register_sale(self):
         self.button_image_5 = PhotoImage(

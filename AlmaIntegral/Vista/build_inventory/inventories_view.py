@@ -7,8 +7,10 @@ from AlmaIntegral.Modelo.Products import ManagementProduct
 from AlmaIntegral.Modelo.Bases_de_datos import DataBase
 from AlmaIntegral.Modelo.Products import ManagementProduct
 
-class XD:
-    def __init__(self, ):
+
+class Inventory:
+    def __init__(self, ventana_anterior):
+        self.ventana_anterior = ventana_anterior
         self.database = DataBase("../../assets/Inventory.db")
         self.products = ManagementProduct("../../assets/Inventory.db")
 
@@ -21,6 +23,8 @@ class XD:
         self.category = None
         self.brand = None
         self.quantity = None
+        self.filter1 = None
+        self.filter2 = None
 
         self.code_actual = None
         self.name_actual = None
@@ -35,6 +39,8 @@ class XD:
         self.txt_category = None
         self.txt_brand = None
         self.txt_quantity = None
+        self.txt_filter1 = None
+        self.txt_filter2 = None
 
         self.lbl_code = None
         self.lbl_name = None
@@ -47,6 +53,8 @@ class XD:
         self.button_2 = None
         self.button_3 = None
         self.button_4 = None
+        self.button_5 = None
+        self.button_6 = None
 
         self.table1 = None
         self.table2 = None
@@ -95,6 +103,8 @@ class XD:
         self.price = StringVar()
         self.category = StringVar()
         self.brand = StringVar()
+        self.filter1 = StringVar()
+        self.filter2 = StringVar()
         self.txt_name = Entry(self.window, font=("Arial", 12), textvariable=self.name)
         self.txt_name.place(x=60, y=530)
         self.txt_quantity = Entry(self.window, font=("Arial", 12), textvariable=self.quantity)
@@ -105,13 +115,18 @@ class XD:
         self.txt_category.place(x=480, y=530)
         self.txt_brand = Entry(self.window, font=("Arial", 12), textvariable=self.brand)
         self.txt_brand.place(x=680, y=530)
+        self.txt_filter2 = Entry(self.window, font=("Arial", 12), textvariable=self.filter2)
+        self.txt_filter2.place(x=60, y=280)
+        self.txt_filter1 = Entry(self.window, font=("Arial", 12), textvariable=self.filter1)
+        self.txt_filter1.place(x=60, y=60)
+
 
     def buttons(self):
         self.button_1 = Button(self.window, text="Add Quantity", relief="flat", background="#59A76E",
                                foreground="black", command=lambda: self.add(self.quantity))
         self.button_1.place(x=140, y=200, width=90, height=40)
         self.button_2 = Button(self.window, text="Back", relief="flat", background="#59A76E",
-                               foreground="black")
+                               foreground="black", command=self.back_to_menu)
         self.button_2.place(x=240, y=200, width=90, height=40)
         self.button_3 = Button(self.window, text="Modify", relief="flat", background="#59A76E",
                                foreground="black", command=self.modify)
@@ -119,6 +134,16 @@ class XD:
         self.button_4 = Button(self.window, text="Delete", relief="flat", background="#59A76E",
                                foreground="black", command=lambda: self.delete(self.code))
         self.button_4.place(x=880, y=500, width=90, height=30)
+        self.button_5 = Button(self.window, text="Search", relief="flat", background="#59A76E",
+                               foreground="black", command=self.search)
+        self.button_5.place(x=250, y=60, width=90, height=25)
+        self.button_6 = Button(self.window, text="Search", relief="flat", background="#59A76E",
+                               foreground="black", command=self.search)
+        self.button_6.place(x=250, y=280, width=90, height=25)
+
+    def search(self):
+        self.get_information()
+        self.db_table_inventories(self.code_actual)
 
     def modify(self):
         self.get_information()
@@ -127,11 +152,15 @@ class XD:
         self.db_table_inventories()
         self.db_table_products()
 
+    def back_to_menu(self):
+        self.window.destroy()
+        self.ventana_anterior.start_menu()
+
     def start_window(self):
         self.window.resizable(False, False)
         self.window.mainloop()
 
-    def db_table_inventories(self):
+    def db_table_inventories(self, ref):
         self.table1 = ttk.Treeview(self.window, columns=("1", "2", "3"), show="headings", height=6)
         style = ttk.Style()
         style.theme_use("clam")
@@ -142,11 +171,16 @@ class XD:
 
         self.table1.place(x=350, y=90)
 
-        elements1 = self.database.return_all_elements("Inventories")
-        for i in elements1:
-            self.table1.insert("", "end", values=i)
+        if ref == "":
+            elements1 = self.database.return_all_elements("Inventories")
+            for i in elements1:
+                self.table1.insert("", "end", values=i)
+        else:
+            elements1 = self.database.return_all_elements("Inventories")
+            for i in elements1:
+                self.table1.insert("", "end", values=i)
 
-        self.table1.bind("<Double 1>", self.get_row_table1)
+            self.table1.bind("<Double 1>", self.get_row_table1)
 
     def get_row_table1(self, event):
         self.table1.identify_row(event.y)
@@ -225,10 +259,11 @@ class XD:
         self.labels()
         self.entries()
         self.buttons()
-        self.db_table_inventories()
+        self.db_table_inventories(self.code_actual)
         self.db_table_products()
         self.start_window()
 
 
-xd = XD()
-xd.start()
+'''inventory = Inventory()
+inventory.start()
+'''
