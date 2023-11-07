@@ -344,7 +344,7 @@ class Register:
         if not self.user_management.verify_user_exist(self.email_actual):
             if self.user_management.verify_email(self.email_actual):
                 if self.password_actual == self.confirm_password_actual:
-                    self.user_management.save_register("Users", self.name_actual, self.email_actual, self.password_actual, "Administrador")
+                    self.user_management.save_register(self.name_actual, self.email_actual, self.password_actual, "Administrador")
                 else:
                     messagebox.showerror("Error", "El campo de contrseña es inválido")
             else:
