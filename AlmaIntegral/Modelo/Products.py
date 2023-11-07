@@ -21,6 +21,10 @@ class ManagementProduct:
         db = DataBase(self.address_connection)
         db.insert_rows_products(code, name, price, category, brand)
 
+    def modify_product(self, code: str, name: str, price: float, category: str, brand: str):
+        db = DataBase(self.address_connection)
+        db.up_date_item(code, name, price, category, brand)
+
 
 class InventoriesManagement:
     def __init__(self, address_connection):

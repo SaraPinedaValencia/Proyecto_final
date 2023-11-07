@@ -30,7 +30,7 @@ class DataBase:
         cursor.execute(
             f"""CREATE TABLE Products (
                 code TEXT PRIMARY KEY,
-                name TEXT PRIMARY KEY,
+                name TEXT,
                 price REAL,
                 category TEXT,
                 brand TEXT
@@ -46,7 +46,7 @@ class DataBase:
                 code TEXT,
                 name TEXT,
                 quantity INTEGER,
-                FOREIGN KEY (code, name) REFERENCES Products (code, name)
+                FOREIGN KEY (code) REFERENCES Products (code)
             )""")
         conn.commit()
         conn.close()
@@ -99,6 +99,15 @@ class DataBase:
         conn.close()
         return result
 
+    def search_code_db(self, code: str):
+        conn = sql.connect(self.address_connection)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM Inventories WHERE code = '{code}'")
+        result = cursor.fetchall()
+        conn.commit()
+        conn.close()
+        return result
+
     def verify_name_exist_db(self, name: str):
         conn = sql.connect(self.address_connection)
         cursor = conn.cursor()
@@ -116,6 +125,13 @@ class DataBase:
         conn.commit()
         conn.close()
         return result
+
+    def up_date_item(self, code: str, name: str, price: float, category: str, brand: str):
+        conn = sql.connect(self.address_connection)
+        cursor = conn.cursor()
+        cursor.execute(f"UPDATE Products Set name = {name}, price = {price}, category = {category}, brand = {brand} WHERE code = {code}")
+        conn.commit()
+        conn.close()
 
 
 '''if __name__ == "__main__":

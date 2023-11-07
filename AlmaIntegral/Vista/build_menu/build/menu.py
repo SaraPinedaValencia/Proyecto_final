@@ -4,6 +4,7 @@ from tkinter import Tk, Canvas, Button, PhotoImage
 from AlmaIntegral.Vista.build_register.register import Register
 from AlmaIntegral.Vista.build_create_product.build.create_product import CreateProduct
 from AlmaIntegral.Vista.build_inventory.build.invetories_view import Inventory
+from AlmaIntegral.Vista.build_register_sale.build.register_sale import RegisterSale
 
 CURRENT_PATH = Path(__file__).parent
 ASSETS_PATH = CURRENT_PATH / "assets" / "frame0"
@@ -18,7 +19,8 @@ class Menu:
         self.ventana_anterior = ventana_anterior
         self.register = Register(self)
         self.create = CreateProduct(self)
-        self.inventories = Inventory()
+        self.inventories = Inventory(self)
+        self.register_sale = RegisterSale(self)
         self.window = None
         self.canvas = None
 
@@ -26,11 +28,13 @@ class Menu:
         self.button_image_2 = None
         self.button_image_3 = None
         self.button_image_4 = None
+        self.button_image_5 = None
 
         self.button_1 = None
         self.button_2 = None
         self.button_3 = None
         self.button_4 = None
+        self.button_5 = None
 
         self.image_image_1 = None
         self.image_image_2 = None
@@ -75,7 +79,7 @@ class Menu:
         )
         self.button_1.place(
             x=9.0,
-            y=398.9999999999999,
+            y=500.9999999999999,
             width=336.0,
             height=64.0
         )
@@ -91,7 +95,7 @@ class Menu:
             image=self.button_image_2,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("inventory"),
+            command=self.open_inventories_view,
             relief="flat"
         )
         self.button_2.place(
@@ -104,6 +108,27 @@ class Menu:
     def open_inventories_view(self):
         self.window.destroy()
         self.inventories.start_inventory()
+
+    def button_register_sale(self):
+        self.button_image_5 = PhotoImage(
+            file=relative_to_assets("button_5.png"))
+        self.button_5 = Button(
+            image=self.button_image_5,
+            borderwidth=0,
+            highlightthickness=0,
+            command=self.open_register_sale,
+            relief="flat"
+        )
+        self.button_5.place(
+            x=9.0,
+            y=388.9999999999999,
+            width=336.0,
+            height=72.0
+        )
+
+    def open_register_sale(self):
+        self.window.destroy()
+        self.register_sale.start_register_sale()
 
     def button_create_product(self):
         self.button_image_3 = PhotoImage(
@@ -182,6 +207,7 @@ class Menu:
         self.set_up_canvas()
         self.button_sign_off()
         self.button_inventory()
+        self.button_register_sale()
         self.button_create_product()
         self.button_register_user()
         self.logo()

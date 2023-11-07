@@ -2,24 +2,6 @@ from AlmaIntegral.Modelo.Bases_de_datos import DataBase
 import re
 
 
-class User:
-    def __init__(self, user_name: str, email: str, password: str, role: str):
-        self.user_name: str = user_name
-        self.email: str = email
-        self.password: str = password
-        self.role: str = role
-
-
-class Employee(User):
-    def __init__(self, user_name: str, email: str, password: str, role: str):
-        super().__init__(user_name, email, password, role)
-
-
-class Admin(User):
-    def __init__(self, user_name: str, email: str, password: str, role: str):
-        super().__init__(user_name, email, password, role)
-
-
 class UserManagement:
     def __init__(self, address_connection):
         self.address_connection = address_connection
@@ -35,10 +17,6 @@ class UserManagement:
         if db.verify_user_credential_db(email, password):
             return True
         return False
-
-    def verify_rol(self, email: str):
-        db = DataBase(self.address_connection)
-        return db.verify_rol_db(email)
 
     @staticmethod
     def verify_email(email: str) -> bool:
