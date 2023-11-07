@@ -11,8 +11,8 @@ from AlmaIntegral.Modelo.Products import ManagementProduct
 class Inventory:
     def __init__(self, ventana_anterior):
         self.ventana_anterior = ventana_anterior
-        self.database = DataBase("../../assets/Inventory.db")
-        self.products = ManagementProduct("../../assets/Inventory.db")
+        self.database = DataBase("../assets/Inventory.db")
+        self.products = ManagementProduct("../assets/Inventory.db")
 
         self.window = None
         self.canvas = None

@@ -16,7 +16,7 @@ class Register:
 
     def __init__(self, ventana_anterior2):
         self.ventana_anterior2 = ventana_anterior2
-        self.user_management = UserManagement("../../assets/Inventory.db")
+        self.user_management = UserManagement("../assets/Inventory.db")
 
         self.window = None
         self.canvas = None

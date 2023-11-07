@@ -22,7 +22,7 @@ def relative_to_assets(path: str) -> str:
 class Login:
 
     def __init__(self):
-        self.user_management = UserManagement("../../assets/Inventory.db")
+        self.user_management = UserManagement("../assets/Inventory.db")
         self.menu = Menu(self)
 
         self.canvas = None
@@ -239,5 +239,3 @@ class Login:
         login.iniciar_ventana()
 
 
-ventana = Login()
-ventana.iniciar_login()

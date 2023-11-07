@@ -15,8 +15,8 @@ def relative_to_assets(path: str) -> str:
 class CreateProduct:
 
     def __init__(self, ventana_anterior):
-        self.inventories_management = InventoriesManagement("../../assets/Inventory.db")
-        self.products_management = ManagementProduct("../../assets/Inventory.db")
+        self.inventories_management = InventoriesManagement("../assets/Inventory.db")
+        self.products_management = ManagementProduct("../assets/Inventory.db")
         self.ventana_anterior3 = ventana_anterior
 
         self.window = None
